@@ -1,0 +1,13 @@
+[project]
+name = "scientific-presentations"
+version = "0.2.0"
+requires-python = ">=3.11"
+dependencies = ["PyMuPDF", "PyYAML", "python-pptx", "Pillow"]
+
+[project.optional-dependencies]
+presentation = ["reportlab"]
+math = ["numpy", "scipy", "matplotlib", "plotly", "imageio", "imageio-ffmpeg", "kaleido"]
+report = ["python-docx", "reportlab", "pypdf", "latex2mathml", "mathml2omml"]
+
+[tool.uv]
+package = false

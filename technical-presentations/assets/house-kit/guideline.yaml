@@ -1,0 +1,311 @@
+# Presentation style guideline
+# Shared style for new technical and educational talks; revised 2026-10-11.
+# Deliberate departures: darker readable accent, smaller cover typography,
+# neutral table rules, and separate requirements for mathematical figures
+# and the accompanying academic report. Reference defects are not targets.
+# Regenerate / adapt with:  python tools/extract_spec.py <reference-deck.pdf>
+#
+# All geometry is in PDF points (1/72 in) on a 720x405 canvas unless noted.
+
+meta:
+  schema_version: 3
+  source: workspace house style
+  scope: technical_and_educational_presentations
+  notes: >-
+    The presentation language and subject are chosen for each audience. Arial is the preferred
+    slide family. Geometry and typography are shared with the generator.
+    Mathematical colormaps encode data and are distinct from decoration.
+
+canvas:
+  width: 720
+  height: 405
+  aspect: "16:9"
+  background: "#ffffff"
+
+# ---------------------------------------------------------------- typography
+fonts:
+  # Font name -> aliases seen in exported PDFs
+  whitelist:
+    - Arial
+    - Arial Narrow
+    - Liberation Sans
+    - LiberationSans
+    - Helvetica
+    - HelveticaNeue
+    - Roboto
+  # Fonts that are always wrong in this house style
+  blacklist:
+    - Times New Roman
+    - Georgia
+    - Garamond
+    - Comic Sans MS
+    - Papyrus
+    - Impact
+  mono_whitelist:
+    - Liberation Mono
+    - LiberationMono
+    - Menlo
+    - Monaco
+    - Consolas
+    - "Courier New"
+    - "Roboto Mono"
+    - "Source Code Pro"
+  require_mono_for_code: true
+
+  roles:
+    cover_title:
+      size: 36
+      tolerance: 4
+      weight: regular
+      color: "#000000"
+      align: left
+    cover_subtitle:
+      size: 20
+      weight: regular
+      color: "#000000"
+    title:
+      size: 25
+      weight: regular          # titles are NOT bold in this house style
+      color: "#000000"
+      align: left
+    body:
+      size: 12
+      weight: regular
+      color: "#000000"
+      align: left              # never justified
+    bullet:
+      size: 12
+      marker: "●"
+      indent: 36               # bullet text starts 36pt right of the frame edge
+    caption:                    # table cells, diagram labels
+      size: 10
+      weight: regular
+      color: "#000000"
+      min_size: 9
+    code:
+      size: 14
+      family: mono             # the reference deck wrongly used Arial here
+    emphasis:
+      weight: bold
+      same_size_as_base: true  # never bump size to emphasise; use bold
+
+colors:
+  text_primary: "#000000"
+  text_muted: "#595959"
+  text_on_tint: "#000000"
+  on_accent: "#ffffff"
+  accent: "#3159a6"          # 6.8:1 on white; readable for short text lead-ins
+  accent_secondary: ["#50b9a2", "#cbc2ff"]
+  border_table: "#c4c7c5"
+  whitelist:
+    - "#000000"
+    - "#ffffff"
+    - "#3159a6"
+    - "#595959"
+    - "#c4c7c5"
+    - "#50b9a2"
+    - "#cbc2ff"
+  # A panel may be filled with a tint of any palette colour (same hue, lighter
+  # and less saturated); deckcheck derives that rather than listing every tint.
+  min_contrast_vs_background: 4.5   # WCAG AA for body text
+  min_contrast_large_text: 3.0      # WCAG AA large = >=18pt, or >=14pt bold
+  accent_min_contrast: 3.0          # only large text; small text always needs 4.5
+
+# -------------------------------------------------------------------- layout
+grid:
+  margin_left: 31.3
+  margin_right: 28.0
+  margin_top: 46.0
+  margin_bottom: 29.0
+  title_baseline_y: 46.4
+  content_top: 100.5
+  content_top_tolerance: 8.0   # individual slides may sit a little higher
+  content_bottom: 376.5
+  columns: 2
+  column_split_x: 360.0
+  gutter: 30.0
+  snap_tolerance: 3.0        # pt of slack before a position counts as off-grid
+  banner_height: 45.0        # title placeholder band
+
+# ------------------------------------------------------------------ spacing
+spacing:
+  line_height_ratio: [1.2, 1.45]     # multiple of font size
+  line_height_ratios_seen: [1.2, 1.375]
+  paragraph_gap: 12.0                # extra space after a bullet
+  space_before: 0.0
+  column_gutter: [12.0, 60.0]        # between the text column and the image column
+  gutter_consistency_tolerance: 25.0 # spread across slides before it reads as sloppy
+  padding_in_frame: [3.0, 12.0]
+  safe_area_shrink: 0.0    # extra inset required inside the page
+
+# ----------------------------------------------------------------- density
+density:
+  words_per_slide:
+    min: 3
+    target: [40, 110]
+    max: 130
+  chars_per_slide:
+    target: [300, 900]
+    max: 1000
+  bullets_per_slide:
+    target: [2, 5]
+    max: 7
+  lines_per_slide:
+    max: 18
+  # A slide built from display-size items (a row of big numbers) is the "stat"
+  # archetype: the bullet cap does not apply, the word cap still does.
+  stat_slide_min_size: 20
+  stat_slide_min_items: 3
+  min_font_size: 9
+  max_title_words: 8
+
+# ------------------------------------------------------------------- images
+images:
+  # Scientific explanations need readable axes and room for the result.
+  # Revised after visual review: figures may dominate a slide; remove blank
+  # export margins rather than shrinking the mathematical content.
+  target_area_pct: [15, 40]
+  max_area_pct: 50
+  # A slide whose only content is a figure may use more of the canvas: an
+  # architecture diagram at 25% is too small to read from the back row.
+  figure_slide_max_pct: 65
+  figure_slide_word_limit: 25
+  hero_max_area_pct: 58           # cover / framing slides only
+  coverage_target_pct: [12, 32]   # total graphic coverage averaged over deck
+  slides_with_image_target: [0.5, 0.75]
+  min_native_dpi: 144             # native px / display inch
+  max_aspect_distortion: 0.02     # rendered vs native aspect ratio drift
+  align_to: column_edges         # image x must land on a column edge
+  align_tolerance: 3.0
+
+layouts:
+  scientific_split:
+    text_x: 31.3
+    text_width: 240
+    image_x: 298
+    image_y: 106
+    image_width: 394
+    image_height: 247
+    # Slide captions are omitted after review; explain the encoding in body text.
+    center_image_in_region: true
+  scientific_square:
+    text_x: 31.3
+    text_width: 300
+    image_x: 360
+    image_y: 100.5
+    image_width: 332
+    image_height: 253
+    center_image_in_region: true
+  scientific_wide:
+    intro_y: 100.5
+    image_x: 45
+    image_y: 141
+    image_width: 630
+    image_height: 209
+    center_image_in_region: true
+  editorial:
+    require_explicit_emphasis: true
+    automatic_bold_leadins: false
+    narrative_transition_in_script: true
+    avoid_consecutive_identical_text_patterns: true
+    figure_captions_on_slides: false
+    source_footer_on_slides: false
+    slide_number_format: current / total
+    references_in_speaker_script: true
+
+# ------------------------------------------------------------------ borders
+borders:
+  frame:                          # container around an image or code block
+    color: "#3159a6"
+    width: 0.75
+    dash: [3, 2.25]
+    fill: none
+    radius: 0
+  frame_emphasis:                 # "this node is the focus" marker
+    color: "#3159a6"
+    width: 1.5
+    dash: null
+    fill: none
+  frame_heavy:                    # thicker dashed variant
+    color: "#3159a6"
+    width: 1.5
+    dash: [6, 4.5]
+    fill: none
+  table_grid:
+    color: "#c4c7c5"
+    width: 0.75
+    dash: null
+  # Dark blue is structural; light secondary colours belong to graphics.
+  whitelist:
+    - { color: "#3159a6", widths: [0.75, 1.5], dashes: [null, [3, 2.25], [6, 4.5]] }
+    - { color: "#c4c7c5", widths: [0.75], dashes: [null] }
+    - { color: "#cbc2ff", widths: [0.75], dashes: [null] }
+    - { color: "#50b9a2", widths: [0.75], dashes: [null] }
+  width_tolerance: 0.1
+
+# ---------------------------------------------------------------- structure
+structure:
+  require_title: true
+  title_position_locked: true      # every content slide title at the same x/y
+  duplicate_titles_warn: 2         # >2 slides sharing a title = build sequence
+  flag_build_slides: true          # identical consecutive slides -> use animation
+  allow_rounded_corners: false
+  allow_shadows: false
+  allow_gradients: false
+  allow_tinted_fills: true     # accent only, e.g. one highlighted table cell
+  tinted_fill_max_per_slide: 2
+  require_slide_numbers: true
+  embedded_speaker_notes: false
+
+# Shared authoring geometry. Content, duration and slide count belong to each
+# presentation's deck.yaml, never to this global style. Font files stay local.
+authoring:
+  font_family: Arial
+  mono_family: Courier New
+  line_spacing: 1.3
+  content_width: 660.7
+  content_bottom: 350
+  footer: {x: 642, y: 364, width: 50, size: 9}
+  cover: {title_y: 104, subtitle_y: 233, author_y: 294}
+  compare: {column_width: 300, column_step: 350, heading_y: 110, body_y: 139, takeaway_y: 300}
+  procedure: {number_width: 20, text_x: 62, row_step: 57, max_steps: 4}
+  table: {top: 185, header_height: 25, row_height: 29, padding: 7, font_size: 10.5, header_fill: "#f2f5fb"}
+  media: {autoplay: true, loop: false, volume: 0, mime_type: video/mp4}
+
+speaker_script:
+  location: separate_pdf
+  page_size: A4
+  margin: 43
+  body_size: 12
+  line_spacing: 1.3
+  required_fields: [see, message, speech]
+  optional_fields: [action]
+  include_slide_thumbnail: true
+  include_transition: true
+  include_sources: true
+  include_timing: true
+
+# Authoring/QA requirements below are not all detectable by deckcheck.
+# Keep semantic review distinct from the automated style result.
+scientific_figures:
+  require_axis_labels: true
+  require_units_when_applicable: true
+  require_color_legend: true
+  require_parameter_record: true
+  require_projection_description: true
+  require_source_or_generation_script: true
+  min_label_size_at_placement_pt: 10
+  sequential_colormap: viridis
+  cyclic_colormap: twilight
+  distinguish_numeric_error_from_structure: true
+  visual_pattern_is_not_proof: true
+
+report:
+  page_size: A4
+  body: {family: Times New Roman, size: 12, line_spacing: 1.5, align: justify, first_line_indent_cm: 1.25}
+  heading: {family: Arial, bold: true, numbered: true, space_after_pt: 12}
+  table_caption: {position: above, numbered: true}
+  figure_caption: {position: below, align: center, italic: false, numbered: true}
+  formulas: {editable: true, separate_paragraph: true}
+  toc: {native_field: true, update_before_pdf_export: true}
+  references: {numbered: true, first_citation_order: increasing, describe_web_sources: true}

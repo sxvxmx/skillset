@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical Presentations"
+  short_description: "Plan, build, and review technical presentations"
+  default_prompt: "Create or review an technical presentation with a clear narrative and verified visuals."
